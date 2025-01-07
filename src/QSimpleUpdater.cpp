@@ -29,12 +29,12 @@ static QList<Updater *> UPDATERS;
 
 QSimpleUpdater::~QSimpleUpdater()
 {
-   URLS.clear();
+    URLS.clear();
 
-   foreach (Updater *updater, UPDATERS)
-      updater->deleteLater();
+    foreach(Updater *updater, UPDATERS)
+        updater->deleteLater();
 
-   UPDATERS.clear();
+    UPDATERS.clear();
 }
 
 /**
@@ -42,49 +42,49 @@ QSimpleUpdater::~QSimpleUpdater()
  */
 QSimpleUpdater *QSimpleUpdater::getInstance()
 {
-   static QSimpleUpdater updater;
-   return &updater;
+    static QSimpleUpdater updater;
+    return &updater;
 }
 
 bool QSimpleUpdater::compareVersions(const QString &remote, const QString &local)
 {
-   static QRegularExpression re("v?(\\d+)(?:\\.(\\d+))?(?:\\.(\\d+))?(?:-(\\w+)(?:(\\d+))?)?");
-   QRegularExpressionMatch remoteMatch = re.match(remote);
-   QRegularExpressionMatch localMatch = re.match(local);
+    static QRegularExpression re("v?(\\d+)(?:\\.(\\d+))?(?:\\.(\\d+))?(?:-(\\w+)(?:(\\d+))?)?");
+    QRegularExpressionMatch remoteMatch = re.match(remote);
+    QRegularExpressionMatch localMatch = re.match(local);
 
-   if (!remoteMatch.hasMatch() || !localMatch.hasMatch())
-   {
-      // Invalid version format
-      return false;
-   }
+    if (!remoteMatch.hasMatch() || !localMatch.hasMatch())
+    {
+        // Invalid version format
+        return false;
+    }
 
-   for (int i = 1; i <= 3; ++i)
-   {
-      int remoteNum = remoteMatch.captured(i).toInt();
-      int localNum = localMatch.captured(i).toInt();
+    for (int i = 1; i <= 3; ++i)
+    {
+        int remoteNum = remoteMatch.captured(i).toInt();
+        int localNum = localMatch.captured(i).toInt();
 
-      if (remoteNum > localNum)
-         return true;
-      else if (localNum > remoteNum)
-         return false;
-   }
+        if (remoteNum > localNum)
+            return true;
+        else if (localNum > remoteNum)
+            return false;
+    }
 
-   QString remoteSuffix = remoteMatch.captured(4);
-   QString localSuffix = localMatch.captured(4);
+    QString remoteSuffix = remoteMatch.captured(4);
+    QString localSuffix = localMatch.captured(4);
 
-   if (remoteSuffix.isEmpty() && !localSuffix.isEmpty())
-      // Remote is stable, local is pre-release
-      return true;
-   if (!remoteSuffix.isEmpty() && localSuffix.isEmpty())
-      // Remote is pre-release, local is stable
-      return false;
-   if (remoteSuffix != localSuffix)
-      // Compare suffixes lexicographically
-      return remoteSuffix > localSuffix;
+    if (remoteSuffix.isEmpty() && !localSuffix.isEmpty())
+        // Remote is stable, local is pre-release
+        return true;
+    if (!remoteSuffix.isEmpty() && localSuffix.isEmpty())
+        // Remote is pre-release, local is stable
+        return false;
+    if (remoteSuffix != localSuffix)
+        // Compare suffixes lexicographically
+        return remoteSuffix > localSuffix;
 
-   int remoteSuffixNum = remoteMatch.captured(5).toInt();
-   int localSuffixNum = localMatch.captured(5).toInt();
-   return remoteSuffixNum > localSuffixNum;
+    int remoteSuffixNum = remoteMatch.captured(5).toInt();
+    int localSuffixNum = localMatch.captured(5).toInt();
+    return remoteSuffixNum > localSuffixNum;
 }
 
 /**
@@ -97,7 +97,7 @@ bool QSimpleUpdater::compareVersions(const QString &remote, const QString &local
  */
 bool QSimpleUpdater::usesCustomAppcast(const QString &url) const
 {
-   return getUpdater(url)->customAppcast();
+    return getUpdater(url)->customAppcast();
 }
 
 /**
@@ -109,7 +109,7 @@ bool QSimpleUpdater::usesCustomAppcast(const QString &url) const
  */
 bool QSimpleUpdater::getNotifyOnUpdate(const QString &url) const
 {
-   return getUpdater(url)->notifyOnUpdate();
+    return getUpdater(url)->notifyOnUpdate();
 }
 
 /**
@@ -121,7 +121,7 @@ bool QSimpleUpdater::getNotifyOnUpdate(const QString &url) const
  */
 bool QSimpleUpdater::getNotifyOnFinish(const QString &url) const
 {
-   return getUpdater(url)->notifyOnFinish();
+    return getUpdater(url)->notifyOnFinish();
 }
 
 /**
@@ -134,7 +134,7 @@ bool QSimpleUpdater::getNotifyOnFinish(const QString &url) const
  */
 bool QSimpleUpdater::getUpdateAvailable(const QString &url) const
 {
-   return getUpdater(url)->updateAvailable();
+    return getUpdater(url)->updateAvailable();
 }
 
 /**
@@ -146,7 +146,7 @@ bool QSimpleUpdater::getUpdateAvailable(const QString &url) const
  */
 bool QSimpleUpdater::getDownloaderEnabled(const QString &url) const
 {
-   return getUpdater(url)->downloaderEnabled();
+    return getUpdater(url)->downloaderEnabled();
 }
 
 /**
@@ -162,7 +162,7 @@ bool QSimpleUpdater::getDownloaderEnabled(const QString &url) const
  */
 bool QSimpleUpdater::usesCustomInstallProcedures(const QString &url) const
 {
-   return getUpdater(url)->useCustomInstallProcedures();
+    return getUpdater(url)->useCustomInstallProcedures();
 }
 
 /**
@@ -176,7 +176,7 @@ bool QSimpleUpdater::usesCustomInstallProcedures(const QString &url) const
  */
 QString QSimpleUpdater::getOpenUrl(const QString &url) const
 {
-   return getUpdater(url)->openUrl();
+    return getUpdater(url)->openUrl();
 }
 
 /**
@@ -189,7 +189,7 @@ QString QSimpleUpdater::getOpenUrl(const QString &url) const
  */
 QString QSimpleUpdater::getChangelog(const QString &url) const
 {
-   return getUpdater(url)->changelog();
+    return getUpdater(url)->changelog();
 }
 
 /**
@@ -203,7 +203,7 @@ QString QSimpleUpdater::getChangelog(const QString &url) const
  */
 QString QSimpleUpdater::getModuleName(const QString &url) const
 {
-   return getUpdater(url)->moduleName();
+    return getUpdater(url)->moduleName();
 }
 
 /**
@@ -216,7 +216,7 @@ QString QSimpleUpdater::getModuleName(const QString &url) const
  */
 QString QSimpleUpdater::getDownloadUrl(const QString &url) const
 {
-   return getUpdater(url)->downloadUrl();
+    return getUpdater(url)->downloadUrl();
 }
 
 /**
@@ -234,7 +234,7 @@ QString QSimpleUpdater::getDownloadUrl(const QString &url) const
  */
 QString QSimpleUpdater::getPlatformKey(const QString &url) const
 {
-   return getUpdater(url)->platformKey();
+    return getUpdater(url)->platformKey();
 }
 
 /**
@@ -247,7 +247,7 @@ QString QSimpleUpdater::getPlatformKey(const QString &url) const
  */
 QString QSimpleUpdater::getLatestVersion(const QString &url) const
 {
-   return getUpdater(url)->latestVersion();
+    return getUpdater(url)->latestVersion();
 }
 
 /**
@@ -261,7 +261,7 @@ QString QSimpleUpdater::getLatestVersion(const QString &url) const
  */
 QString QSimpleUpdater::getModuleVersion(const QString &url) const
 {
-   return getUpdater(url)->moduleVersion();
+    return getUpdater(url)->moduleVersion();
 }
 
 /**
@@ -273,7 +273,7 @@ QString QSimpleUpdater::getModuleVersion(const QString &url) const
  */
 QString QSimpleUpdater::getUserAgentString(const QString &url) const
 {
-   return getUpdater(url)->userAgentString();
+    return getUpdater(url)->userAgentString();
 }
 
 /**
@@ -285,12 +285,12 @@ QString QSimpleUpdater::getUserAgentString(const QString &url) const
  */
 void QSimpleUpdater::checkForUpdates(const QString &url)
 {
-   getUpdater(url)->checkForUpdates();
+    getUpdater(url)->checkForUpdates();
 }
 
 void QSimpleUpdater::setDownloadDir(const QString &url, const QString &dir)
 {
-   getUpdater(url)->setDownloadDir(dir);
+    getUpdater(url)->setDownloadDir(dir);
 }
 
 /**
@@ -304,7 +304,7 @@ void QSimpleUpdater::setDownloadDir(const QString &url, const QString &dir)
  */
 void QSimpleUpdater::setModuleName(const QString &url, const QString &name)
 {
-   getUpdater(url)->setModuleName(name);
+    getUpdater(url)->setModuleName(name);
 }
 
 /**
@@ -316,7 +316,7 @@ void QSimpleUpdater::setModuleName(const QString &url, const QString &name)
  */
 void QSimpleUpdater::setNotifyOnUpdate(const QString &url, const bool notify)
 {
-   getUpdater(url)->setNotifyOnUpdate(notify);
+    getUpdater(url)->setNotifyOnUpdate(notify);
 }
 
 /**
@@ -329,7 +329,7 @@ void QSimpleUpdater::setNotifyOnUpdate(const QString &url, const bool notify)
  */
 void QSimpleUpdater::setNotifyOnFinish(const QString &url, const bool notify)
 {
-   getUpdater(url)->setNotifyOnFinish(notify);
+    getUpdater(url)->setNotifyOnFinish(notify);
 }
 
 /**
@@ -348,7 +348,7 @@ void QSimpleUpdater::setNotifyOnFinish(const QString &url, const bool notify)
  */
 void QSimpleUpdater::setPlatformKey(const QString &url, const QString &platform)
 {
-   getUpdater(url)->setPlatformKey(platform);
+    getUpdater(url)->setPlatformKey(platform);
 }
 
 /**
@@ -361,7 +361,7 @@ void QSimpleUpdater::setPlatformKey(const QString &url, const QString &platform)
  */
 void QSimpleUpdater::setModuleVersion(const QString &url, const QString &version)
 {
-   getUpdater(url)->setModuleVersion(version);
+    getUpdater(url)->setModuleVersion(version);
 }
 
 /**
@@ -374,7 +374,7 @@ void QSimpleUpdater::setModuleVersion(const QString &url, const QString &version
  */
 void QSimpleUpdater::setDownloaderEnabled(const QString &url, const bool enabled)
 {
-   getUpdater(url)->setDownloaderEnabled(enabled);
+    getUpdater(url)->setDownloaderEnabled(enabled);
 }
 
 /**
@@ -386,7 +386,7 @@ void QSimpleUpdater::setDownloaderEnabled(const QString &url, const bool enabled
  */
 void QSimpleUpdater::setUserAgentString(const QString &url, const QString &agent)
 {
-   getUpdater(url)->setUserAgentString(agent);
+    getUpdater(url)->setUserAgentString(agent);
 }
 
 /**
@@ -400,7 +400,7 @@ void QSimpleUpdater::setUserAgentString(const QString &url, const QString &agent
  */
 void QSimpleUpdater::setUseCustomAppcast(const QString &url, const bool customAppcast)
 {
-   getUpdater(url)->setUseCustomAppcast(customAppcast);
+    getUpdater(url)->setUseCustomAppcast(customAppcast);
 }
 
 /**
@@ -416,22 +416,27 @@ void QSimpleUpdater::setUseCustomAppcast(const QString &url, const bool customAp
  */
 void QSimpleUpdater::setUseCustomInstallProcedures(const QString &url, const bool custom)
 {
-   getUpdater(url)->setUseCustomInstallProcedures(custom);
+    getUpdater(url)->setUseCustomInstallProcedures(custom);
 }
 
 void QSimpleUpdater::setMandatoryUpdate(const QString &url, const bool mandatory_update)
 {
-   getUpdater(url)->setMandatoryUpdate(mandatory_update);
+    getUpdater(url)->setMandatoryUpdate(mandatory_update);
 }
 
 void QSimpleUpdater::setDownloadUserName(const QString &url, const QString &userName)
 {
-   getUpdater(url)->setDownloadUserName(userName);
+    getUpdater(url)->setDownloadUserName(userName);
 }
 
 void QSimpleUpdater::setDownloadPassword(const QString &url, const QString &password)
 {
-   getUpdater(url)->setDownloadPassword(password);
+    getUpdater(url)->setDownloadPassword(password);
+}
+
+void QSimpleUpdater::setDownloadUrlManul(const QString &url1, const QString &url2)
+{
+    getUpdater(url1)->setDownloadUrl(url2);
 }
 
 /**
@@ -442,21 +447,21 @@ void QSimpleUpdater::setDownloadPassword(const QString &url, const QString &pass
  */
 Updater *QSimpleUpdater::getUpdater(const QString &url) const
 {
-   if (!URLS.contains(url))
-   {
-      Updater *updater = new Updater;
-      updater->setUrl(url);
+    if (!URLS.contains(url))
+    {
+        Updater *updater = new Updater;
+        updater->setUrl(url);
 
-      URLS.append(url);
-      UPDATERS.append(updater);
+        URLS.append(url);
+        UPDATERS.append(updater);
 
-      connect(updater, SIGNAL(checkingFinished(QString)), this, SIGNAL(checkingFinished(QString)));
-      connect(updater, SIGNAL(downloadFinished(QString, QString)), this, SIGNAL(downloadFinished(QString, QString)));
-      connect(updater, SIGNAL(appcastDownloaded(QString, QByteArray)), this,
-              SIGNAL(appcastDownloaded(QString, QByteArray)));
-   }
+        connect(updater, SIGNAL(checkingFinished(QString)), this, SIGNAL(checkingFinished(QString)));
+        connect(updater, SIGNAL(downloadFinished(QString, QString)), this, SIGNAL(downloadFinished(QString, QString)));
+        connect(updater, SIGNAL(appcastDownloaded(QString, QByteArray)), this,
+                SIGNAL(appcastDownloaded(QString, QByteArray)));
+    }
 
-   return UPDATERS.at(URLS.indexOf(url));
+    return UPDATERS.at(URLS.indexOf(url));
 }
 
 #if QSU_INCLUDE_MOC
